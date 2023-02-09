@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  mysql-tgdd:
+    image: mysql:8.0.29
+    container_name: mysql-tgdd
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-tgdd:/var/lib/mysql
+      - mysql-config:/etc/mysql/my.cnf
+    networks:
+      - backend
+    environment:
+      MYSQL_ROOT_PASSWORD: 2211
+      MYSQL_DATABASE: tgdd
+      MYSQL_USER: quang
+      MYSQL_PASSWORD: 2211
+
+  springboot-tgdd:
+      image: quangdang2001/springboot-tgdd:1.0
+      container_name: springboot-tgdd
+      ports:
+        - "8081:8080"
+      volumes:
+        - ./:/app
+      networks:
+        - backend
+
+networks:
+  backend:
+    name: tgdd-network
+volumes:
+  mysql-tgdd:
+  mysql-config:
